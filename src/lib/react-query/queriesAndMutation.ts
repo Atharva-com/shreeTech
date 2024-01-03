@@ -2,7 +2,7 @@ import {
   useQuery,
   useMutation,
   useQueryClient,
-  useInfiniteQuery,
+  // useInfiniteQuery,
 } from "@tanstack/react-query";
 
 //   useQuery - for fetching the data from the server
@@ -10,7 +10,7 @@ import {
 //   useQueryClient - for interacting with the query client instance
 //   useInfiniteQuery - for paginated data
 import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
-import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
+import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getPostById, getRecentPosts, getUserPosts, likePost, savePost, signInAccount, signOutAccount, updatePost } from "../appwrite/api";
 
 export const useCreateUserAccount = () => {
