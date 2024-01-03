@@ -271,7 +271,7 @@
   }
 
   .shad-button_dark_4 {
-    @apply h-12 bg-dark-4 px-5 text-light-1 flex gap-2 !important;
+    @apply h-10 bg-dark-4 px-5 text-light-1 flex gap-2 focus-visible:ring-0 focus-visible:ring-offset-0 ring-offset-0 ring-0 pointer-events-auto opacity-70 mt-2 !important;
   }
 
   .shad-button_ghost {

@@ -5,7 +5,6 @@ import { Models } from "appwrite";
 
 
 const Home = () => {
-
   const {
     data: posts,
     isLoading: isPostLoading,
@@ -18,8 +17,15 @@ const Home = () => {
         <div className="home-container">
           <p className="body-medium text-light-1">Something bad happened</p>
         </div>
-        <div className="home-creators">
-          <p className="body-medium text-light-1">Something bad happened</p>
+      </div>
+    );
+  }
+
+  if(posts?.documents.length === 0) {
+    return (
+      <div className="flex flex-1">
+        <div className="home-container">
+          <p className="body-medium text-light-1">No posts to Display.</p>
         </div>
       </div>
     );

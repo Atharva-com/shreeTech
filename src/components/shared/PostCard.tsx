@@ -36,7 +36,7 @@ const PostCard = ({ post }: PostCardProps) => {
                                 {multiFormatDateString(post.$createdAt)}
                             </p>
                             •
-                            <p className="subtle-semibold lg:small-regular">
+                            <p className="subtle-semibold lg:small-regular capitalize">
                                 {post.location}
                             </p>
                         </div>
