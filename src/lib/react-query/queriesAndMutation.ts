@@ -172,40 +172,40 @@ export const useSearchPosts = (searchTerm: string) => {
   });
 };
 
-export const useGetPosts = () => {
-  return useInfiniteQuery({
-    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-    queryFn: getInfinitePosts as any,
-    getNextPageParam: (lastPage: any) => {
-      // If there's no data, there are no more pages.
-      if (lastPage && lastPage.documents.length === 0) {
-        return null;
-      }
-
-      // Use the $id of the last document as the cursor.
-      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
-      return lastId;
-    },
-  });
-};
 // export const useGetPosts = () => {
 //   return useInfiniteQuery({
 //     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
 //     queryFn: getInfinitePosts as any,
-//     getNextPageParam: (lastPage) => {
+//     getNextPageParam: (lastPage: any) => {
 //       // If there's no data, there are no more pages.
-//       if (lastPage && (lastPage as { documents: any[] }).documents && (lastPage as { documents: any[] }).documents.length === 0) {
+//       if (lastPage && lastPage.documents.length === 0) {
 //         return null;
 //       }
 
 //       // Use the $id of the last document as the cursor.
-//       const lastId = (lastPage as { documents: any[] }).documents[(lastPage as { documents: any[] }).documents.length - 1].$id;
-      
-//       return lastId || null;
+//       const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+//       return lastId;
 //     },
-//     initialPageParam: null, // Add the initialPageParam property
 //   });
 // };
+export const useGetPosts = () => {
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+    queryFn: getInfinitePosts as any,
+    getNextPageParam: (lastPage) => {
+      // If there's no data, there are no more pages.
+      if (lastPage && (lastPage as { documents: any[] }).documents && (lastPage as { documents: any[] }).documents.length === 0) {
+        return null;
+      }
+
+      // Use the $id of the last document as the cursor.
+      const lastId = (lastPage as { documents: any[] }).documents[(lastPage as { documents: any[] }).documents.length - 1].$id;
+      
+      return lastId || null;
+    },
+    initialPageParam: null, // Add the initialPageParam property
+  });
+};
 export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_CURRENT_USER],
