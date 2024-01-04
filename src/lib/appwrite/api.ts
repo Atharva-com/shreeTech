@@ -305,7 +305,6 @@ export async function deleteSavedPost(savedRecordId: string) {
 }
 export async function deletePost(postId?: string, imageId?: string) {
   if (!postId || !imageId) return;
-  console.log(postId, imageId);
   try {
     const statusCode = await databases.deleteDocument(
       appwriteConfig.databaseId,
