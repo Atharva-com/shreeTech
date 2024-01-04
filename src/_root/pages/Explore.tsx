@@ -31,7 +31,8 @@ const Explore = () => {
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
   const shouldShowSearchResults = searchValue !== "";
   const shouldShowPosts = !shouldShowSearchResults &&
-    posts?.pages.every((item) => item?.documents.length === 0);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    posts?.pages.every((item) => (item as { documents: any[] })?.documents.length === 0);
 
   const { data: searchedPosts, isFetching: isSearchFetching } = useSearchPosts(debouncedSearch);
 
@@ -97,7 +98,8 @@ const Explore = () => {
           <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
         ) : (
           posts.pages.map((item, index) => (
-            <GridPostList key={`page-${index}`} posts={item.documents} />
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            <GridPostList key={`page-${index}`} posts={(item as { documents: any[] }).documents} />
           ))
         )}
       </div>
