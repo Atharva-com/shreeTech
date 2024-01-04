@@ -62,7 +62,7 @@ const SigninForm = () => {
                 navigate("/");
             } else {
               form.reset();
-                toast({ title: "Login failed. Please try again.", });
+                toast({ title: "Login failed. Please try again.",variant: "destructive" });
 
                 return;
             }
