@@ -15,6 +15,14 @@ const GridPostList = ({
     showStats = true,
 }: GridPostListProps) => {
     const { user } = useUserContext();
+
+    if(posts?.length === 0){
+        return (
+            <div>
+                No Posts To Show.
+            </div>
+        )
+    }
     return (
         <ul className="grid-container">
             {posts.map((post) => (

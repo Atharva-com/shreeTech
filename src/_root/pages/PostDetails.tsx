@@ -1,6 +1,5 @@
 import { useUserContext } from '@/context/AuthContext';
 import { useDeletePost, useGetPostById, useGetUserPosts } from '@/lib/react-query/queriesAndMutation';
-// import React from 'react'
 import { Button } from "@/components/ui/button";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import PostStats from '@/components/shared/PostStats';
@@ -27,7 +26,6 @@ const PostDetails = () => {
     deletePost({ postId: id, imageId: post?.imageId });
     navigate(-1);
   };
-
   return (
     <div className="post_details-container">
 
@@ -143,6 +141,7 @@ const PostDetails = () => {
         {isUserPostLoading || !relatedPosts ? (
           <Loader />
         ) : (
+          
           <GridPostList posts={relatedPosts} />
         )}
       </div>

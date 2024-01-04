@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   useQuery,
   useMutation,
   useQueryClient,
-  // useInfiniteQuery,
+  useInfiniteQuery,
 } from "@tanstack/react-query";
 
 //   useQuery - for fetching the data from the server
@@ -11,7 +12,7 @@ import {
 //   useInfiniteQuery - for paginated data
 import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
-import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getPostById, getRecentPosts, getUserPosts, likePost, savePost, signInAccount, signOutAccount, updatePost } from "../appwrite/api";
+import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getInfinitePosts, getPostById, getRecentPosts, getUserPosts, likePost, savePost, searchPosts, signInAccount, signOutAccount, updatePost } from "../appwrite/api";
 
 export const useCreateUserAccount = () => {
   return useMutation({
@@ -154,6 +155,48 @@ export const useGetUserPosts = (userId?: string) => {
   });
 };
 
+export const useSearchPosts = (searchTerm: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
+    queryFn: () => searchPosts(searchTerm),
+    enabled: !!searchTerm,
+  });
+};
+
+export const useGetPosts = () => {
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+    queryFn: getInfinitePosts as any,
+    getNextPageParam: (lastPage: any) => {
+      // If there's no data, there are no more pages.
+      if (lastPage && lastPage.documents.length === 0) {
+        return null;
+      }
+
+      // Use the $id of the last document as the cursor.
+      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+      return lastId;
+    },
+  });
+};
+// export const useGetPosts = () => {
+//   return useInfiniteQuery({
+//     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+//     queryFn: getInfinitePosts as any,
+//     getNextPageParam: (lastPage) => {
+//       // If there's no data, there are no more pages.
+//       if (lastPage && (lastPage as { documents: any[] }).documents && (lastPage as { documents: any[] }).documents.length === 0) {
+//         return null;
+//       }
+
+//       // Use the $id of the last document as the cursor.
+//       const lastId = (lastPage as { documents: any[] }).documents[(lastPage as { documents: any[] }).documents.length - 1].$id;
+      
+//       return lastId || null;
+//     },
+//     initialPageParam: null, // Add the initialPageParam property
+//   });
+// };
 export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_CURRENT_USER],
