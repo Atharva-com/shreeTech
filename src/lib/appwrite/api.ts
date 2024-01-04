@@ -305,7 +305,7 @@ export async function deleteSavedPost(savedRecordId: string) {
 }
 export async function deletePost(postId?: string, imageId?: string) {
   if (!postId || !imageId) return;
-
+  console.log(postId, imageId);
   try {
     const statusCode = await databases.deleteDocument(
       appwriteConfig.databaseId,
@@ -412,3 +412,41 @@ export async function getRecentPosts() {
   }
 }
 
+export async function getUsers(limit?: number) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const queries: any[] = [Query.orderDesc("$createdAt")];
+
+  if (limit) {
+    queries.push(Query.limit(limit));
+  }
+
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      queries
+    );
+
+    if (!users) throw Error;
+
+    return users;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getUserById(userId: string) {
+  try {
+    const user = await databases.getDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      userId
+    );
+
+    if (!user) throw Error;
+
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
